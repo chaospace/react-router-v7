@@ -29,7 +29,11 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
       <div id="sidebar">
         <h1><Link to="about">React Router Contacts</Link></h1>
         <div>
-          <Form id="search-form" role="search" onChange={ (event) => submit(event.currentTarget) }>
+          <Form id="search-form" role="search" onChange={ (event) => {
+            const isFirstSearch = q === null;
+            console.log('value', q);
+            submit(event.currentTarget, { replace: !isFirstSearch })
+          } }>
             <input
               aria-label="Search contacts"
               id="q"
