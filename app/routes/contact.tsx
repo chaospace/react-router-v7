@@ -1,16 +1,16 @@
-import type { ContactRecord } from "app/data";
+import { getContact, type ContactRecord } from "../data";
 import { Form } from "react-router";
+import type { Route } from "./+types/contact";
 
+export async function loader({ params }: Route.LoaderArgs) {
+  const contact = await getContact(params.contactId);
+  return { contact }
+}
 
-
-export default function Contact() {
-  const contact = {
-    first: 'John',
-    last: 'Doe',
-    avatar: 'https://placecats.com/200/200',
-    twitter: 'johndoe',
-    notes: 'This is a note',
-    favorite: true,
+export default function Contact({ loaderData }: Route.ComponentProps) {
+  const { contact } = loaderData;
+  if (!contact) {
+    throw new Response("Contact not found", { status: 404 });
   }
   return (
     <div id="contact">
