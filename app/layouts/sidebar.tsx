@@ -1,13 +1,11 @@
 import { Outlet, Link, Form } from "react-router";
-import type { Route } from "../+types/root";
 import { getContacts } from "../data";
+import type { Route } from "./+types/sidebar";
 
 export async function clientLoader() {
   const contacts = await getContacts();
   return { contacts };
 }
-
-
 
 export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
   const { contacts } = loaderData;
