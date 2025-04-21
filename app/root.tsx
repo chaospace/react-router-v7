@@ -1,5 +1,5 @@
 import {
-  Form,
+  Outlet,
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
@@ -8,39 +8,18 @@ import type { Route } from "./+types/root";
 
 import appStylesHref from "./app.css?url";
 
-export default function App() {
+
+export function HydrateFallback() {
   return (
-    <>
-      <div id="sidebar">
-        <h1>React Router Contacts</h1>
-        <div>
-          <Form id="search-form" role="search">
-            <input
-              aria-label="Search contacts"
-              id="q"
-              name="q"
-              placeholder="Search"
-              type="search"
-            />
-            <div aria-hidden hidden={true} id="search-spinner" />
-          </Form>
-          <Form method="post">
-            <button type="submit">New</button>
-          </Form>
-        </div>
-        <nav>
-          <ul>
-            <li>
-              <a href={`/contacts/1`}>Your Name</a>
-            </li>
-            <li>
-              <a href={`/contacts/2`}>Your Friend</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </>
-  );
+    <div id="loading-splash">
+      <div id="loading-splash-spinner" />
+      <p>Loading, Please wait...</p>
+    </div>
+  )
+}
+
+export default function App() {
+  return <Outlet />;
 }
 
 // The Layout component is a special export for the root route.
@@ -52,10 +31,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href={appStylesHref} />
+        <link rel="stylesheet" href={ appStylesHref } />
       </head>
       <body>
-        {children}
+        { children }
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -83,13 +62,13 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   return (
     <main id="error-page">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
+      <h1>{ message }</h1>
+      <p>{ details }</p>
+      { stack && (
         <pre>
-          <code>{stack}</code>
+          <code>{ stack }</code>
         </pre>
-      )}
+      ) }
     </main>
   );
 }
