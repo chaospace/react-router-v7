@@ -7,6 +7,7 @@ import {
 import type { Route } from "./+types/root";
 
 import appStylesHref from "./app.css?url";
+import { createEmptyContact } from "./data";
 
 
 export function HydrateFallback() {
@@ -16,6 +17,11 @@ export function HydrateFallback() {
       <p>Loading, Please wait...</p>
     </div>
   )
+}
+
+export async function action() {
+  const contact = await createEmptyContact();
+  return { contact };
 }
 
 export default function App() {

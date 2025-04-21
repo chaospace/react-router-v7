@@ -1,4 +1,4 @@
-import { Outlet, Link, Form } from "react-router";
+import { Outlet, Link, Form, NavLink, useNavigation } from "react-router";
 import { getContacts } from "../data";
 import type { Route } from "./+types/sidebar";
 
@@ -9,6 +9,7 @@ export async function loader() {
 
 export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
   const { contacts } = loaderData;
+  const navigation = useNavigation();
   return (
     <>
       <div id="sidebar">
@@ -35,7 +36,9 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
                 { contacts.map((contact: any) => {
                   return (
                     <li key={ contact.id }>
-                      <Link to={ `/contacts/${contact.id}` }>
+                      <NavLink className={ ({ isActive, isPending }) => {
+                        return isActive ? "active" : isPending ? "pending" : ""
+                      } } to={ `/contacts/${contact.id}` }>
                         {
                           contact.first || contact.last ? (
                             <>{ contact.first } { contact.last }</>
@@ -44,7 +47,7 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
                         { contact.favorite && (
                           <span>★</span>
                         ) }
-                      </Link>
+                      </NavLink>
                     </li>
                   )
                 }) }
@@ -53,7 +56,7 @@ export default function SidebarLayout({ loaderData }: Route.ComponentProps) {
             : (<p><i>No Contacts</i></p>) }
         </nav>
       </div>
-      <div id="detail">
+      <div id="detail" className={ navigation.state === 'loading' ? 'loading' : '' }>
         <Outlet />
       </div>
     </>
