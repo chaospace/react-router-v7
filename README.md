@@ -1,3 +1,9 @@
+# 리액트 라우터v7 학습 
+ - 샘플예제를 통한 변경내용 학습
+ - next처럼 폴더링 기반 라우팅 가능
+ - loader, action을 통해 브라우저에 장점을 활용가능
+ - 다양한 방식으로 라우팅 정의가 가능
+
 # Welcome to React Router!
 
 - [React Router Docs](https://reactrouter.com/home)
